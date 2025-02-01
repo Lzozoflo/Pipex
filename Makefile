@@ -19,8 +19,10 @@ D_SRC			=		src/
 D_OBJ			=		object/
 D_INC			=		inc/
 
+
 # Source Directories
 D_UTILS		=		utils/
+
 
 #############################################################################################
 #																							#
@@ -32,9 +34,10 @@ D_UTILS		=		utils/
 INC				=		ft_pipex.h
 
 SRC				=		main.c					\
-						ft_find_check_access.c
+						ft_find_access_exec.c
 
-SRC_UTILS		=		ft_split_cmd.c
+
+SRC_UTILS		=		utils.c
 
 #############################################################################################
 #																							#
@@ -51,6 +54,7 @@ SRCS			=		$(addprefix $(D_SRC), $(SRC))					\
 OBJS			=		$(subst $(D_SRC), $(D_OBJ), $(SRCS:.c=.o))
 D_OBJS			=		$(subst $(D_SRC), $(D_OBJ), $(SRCS))
 DEPS			=		$(SRCS:%.c=%.d)
+
 
 INCS			=		$(addprefix $(D_INC), $(INC))
 
@@ -84,7 +88,6 @@ $(NAME)			:	$(OBJS)
 $(D_OBJ)%.o		:	$(D_SRC)%.c Makefile $(INCS)
 			@mkdir -p $(dir $@)
 			$(CC) $(CFLAGS) -c $< -o $@ -I $(D_INC) -I $(D_INC_LIBFT)
-
 
 
 libft			:

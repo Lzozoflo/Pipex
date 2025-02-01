@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_check_access.c                             :+:      :+:    :+:   */
+/*   ft_find_access_exec.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:55:17 by fcretin           #+#    #+#             */
-/*   Updated: 2025/01/28 12:36:13 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/01 09:06:06 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 #include "libft.h"
-// #include <fcntl.h>
-// #include <unistd.h>
 
 char	*ft_find_line_env(char *env_name, char **env)
 {
@@ -36,68 +34,54 @@ char	**ft_add_slash(char **tab)
 	i = 0;
 	if (!tab)
 		return (NULL);
-	while (tab[i])
+	while (tab[i] && tab[i][0])
 	{
-		tmp = &tab[i];
+		tmp = &tab[i][0];
 		tab[i] = ft_strjoin(tab[i], "/");
 		free(tmp);
 		if (!tab[i])
 			return (ft_freetab(tab, 0));
+		i++;
 	}
 	return (tab);
 }
 
-char	*ft_check_acces(char *cmd_to_split, char **env)
+int	ft_creat_utils_access(char *cmd_split, char **env, char ***tab, char ***cmd)
+{
+	*tab = ft_add_slash(ft_split(ft_find_line_env("PATH", env), ':'));
+	if (!*tab)
+		return (0);
+	*cmd = ft_split(cmd_split, ' ');
+	if (!*cmd)
+		return ((void)ft_freetab(*tab, 0), 0);
+	return (1);
+}
+
+char	*ft_exec(char *cmd_split, char **env)
 {
 	char	**cmd;
 	char	**tab;
 	char	*exec;
 	int		i;
 
-	i = -1;
-	tab = ft_add_slash(ft_split(ft_find_line_env("PATH", env), ':'));
-	if (!tab)
+	if (!ft_creat_utils_access(cmd_split, env, &tab, &cmd))
 		return (NULL);
-	cmd = ft_split_cmd(cmd_to_split);
-	if (!cmd)
-		return ((void)ft_freetab(tab, 0), NULL);
+	i = -1;
 	while (tab[++i])
 	{
 		exec = ft_strjoin(tab[i], cmd[0]);
 		if (!exec)
 			return ((void)ft_freetab(tab, 0), (void)ft_freetab(cmd, 0), NULL);
-		if (access(exec, F_OK) == 0)
-			return ((void)ft_freetab(tab, 0), (void)ft_freetab(cmd, 0), exec);
+		if (access(exec, F_OK | X_OK) == 0)
+		{
+			execve(exec, cmd, env);
+			ft_freetab(tab, 0);
+			ft_freetab(cmd, 0);
+			free(exec);
+			exit(1);
+		}
 		free(exec);
 	}
+	ft_printf("command not found: %s", cmd[0]);
 	return (ft_freetab(tab, 0), (void)ft_freetab(cmd, 0), NULL);
 }
-
-
-// char	*ft_check_acces(char *cmd, char **env)
-// {
-// 	char	**tab;
-// 	char	*path;
-// 	char	*exec;
-// 	int		i;
-
-// 	i = -1;
-// 	tab = ft_split(ft_find_line_env("PATH", env), ':');
-// 	if (!tab)
-// 		return (NULL);
-// 	while (tab[++i])
-// 	{
-// 		path = ft_strjoin(tab[i], "/");
-// 		if (!path)
-// 			return ((void)ft_freetab(tab, 0), NULL);
-// 		exec = ft_strjoin(path, cmd);
-// 		free(path);
-// 		if (!exec)
-// 			return ((void)ft_freetab(tab, 0), NULL);
-// 		if (access(exec, F_OK) == 0)
-// 			return ((void)ft_freetab(tab, 0), exec);
-// 		free(exec);
-// 	}
-// 	ft_freetab(tab, 0);
-// 	return (NULL);
-// }
