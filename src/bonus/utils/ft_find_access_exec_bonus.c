@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_access_exec.c                              :+:      :+:    :+:   */
+/*   ft_find_access_exec_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:55:17 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/01 09:06:06 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/02 10:48:51 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_pipex_bonus.h"
 #include "libft.h"
 
 char	*ft_find_line_env(char *env_name, char **env)

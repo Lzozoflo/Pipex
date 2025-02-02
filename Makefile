@@ -1,15 +1,16 @@
-.PHONY: all clean fclean re f fclear c clear libft
+.PHONY: all clean fclean re f fclear c clear libft bonus
 
 NAME			=	pipex
+B_NAME			=	pipex_bonus
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -MMD -MP -Ofast
+CFLAGS			=	-Wall -Wextra -Werror -MMD -MP -Ofast
 CFLAGSS			=	-Weverything -Wno-padded
 RM				=	rm -fr
 
 
 #############################################################################################
 #																							#
-#										// Directories										#
+#										Directories											#
 #																							#
 #############################################################################################
 
@@ -21,34 +22,37 @@ D_INC			=		inc/
 
 
 # Source Directories
+D_MANDA		=		mandatory/
+D_BONUS		=		bonus/
 D_UTILS		=		utils/
 
 
 #############################################################################################
 #																							#
-#										// SOURCE											#
+#										SOURCE												#
 #																							#
 #############################################################################################
 
 
 INC				=		ft_pipex.h
 
-SRC				=		main.c					\
+SRC				=		main.c
+
+
+SRC_UTILS		=		utils.c					\
 						ft_find_access_exec.c
 
 
-SRC_UTILS		=		utils.c
-
 #############################################################################################
 #																							#
-#										// OBJECT											#
+#										OBJECT												#
 #																							#
 #############################################################################################
 
 
 # All src in his Src Directories
-SRCS			=		$(addprefix $(D_SRC), $(SRC))					\
-						$(addprefix $(D_SRC)$(D_UTILS), $(SRC_UTILS))
+SRCS			=		$(addprefix $(D_SRC)$(D_MANDA), $(SRC))					\
+						$(addprefix $(D_SRC)$(D_MANDA)$(D_UTILS), $(SRC_UTILS))
 
 # Changing all source directories to object directories
 OBJS			=		$(subst $(D_SRC), $(D_OBJ), $(SRCS:.c=.o))
@@ -60,7 +64,7 @@ INCS			=		$(addprefix $(D_INC), $(INC))
 
 #############################################################################################
 #																							#
-#										// LIBFT											#
+#										LIBFT												#
 #																							#
 #############################################################################################
 
@@ -73,7 +77,7 @@ NAME_LIB		=		./libft/libft.a
 
 #############################################################################################
 #																							#
-#										// COMPILATION										#
+#										COMPILATION											#
 #																							#
 #############################################################################################
 
@@ -95,8 +99,67 @@ libft			:
 
 
 #############################################################################################
+#											BONUS											#
+#############################################################################################
+
+
+#############################################################################################
 #																							#
-#								    // CLEAN  FCLEAN  RE									#
+#										SOURCE BONUS										#
+#																							#
+#############################################################################################
+
+
+B_INC			=		ft_pipex_bonus.h
+
+B_SRC			=		main_bonus.c					\
+						ft_here_doc_bonus.c
+
+
+B_SRC_UTILS		=		utils_bonus.c					\
+						ft_find_access_exec_bonus.c
+
+#############################################################################################
+#																							#
+#										OBJECT BONUS										#
+#																							#
+#############################################################################################
+
+
+# All src in his Src Directories
+B_SRCS			=		$(addprefix $(D_SRC)$(D_BONUS), $(B_SRC))					\
+						$(addprefix $(D_SRC)$(D_BONUS)$(D_UTILS), $(B_SRC_UTILS))
+
+# Changing all source directories to object directories
+B_OBJS			=		$(subst $(D_SRC), $(D_OBJ), $(B_SRCS:.c=.o))
+B_D_OBJS		=		$(subst $(D_SRC), $(D_OBJ), $(B_SRCS))
+B_DEPS			=		$(B_SRCS:%.c=%.d)
+
+
+B_INCS			=		$(addprefix $(D_INC), $(B_INC))
+
+#############################################################################################
+#																							#
+#										COMPILATION	BONUS									#
+#																							#
+#############################################################################################
+
+
+bonus				: libft $(B_NAME)
+
+
+$(B_NAME)			:	$(B_OBJS)
+			$(CC) $(CFLAGS) $(B_OBJS) $(NAME_LIB) -o $(B_NAME)
+
+
+$(D_OBJ)%.o		:	$(B_D_SRC)%.c Makefile $(B_INCS)
+			@mkdir -p $(dir $@)
+			$(CC) $(CFLAGS) -c $< -o $@ -I $(D_INC) -I $(D_INC_LIBFT)
+
+
+#############################################################################################
+#																							#
+#										CLEAN FCLEAN RE										#
 #																							#
 #############################################################################################
 
@@ -109,6 +172,7 @@ clean			:
 fclean			:
 			$(RM) $(D_OBJ)
 			$(RM) $(NAME)
+			$(RM) $(B_NAME)
 			$(MAKE) -C libft fclean
 
 re				:	 fclean all
@@ -116,7 +180,7 @@ re				:	 fclean all
 
 #############################################################################################
 #																							#
-#										Allias									#
+#										Allias												#
 #																							#
 #############################################################################################
 

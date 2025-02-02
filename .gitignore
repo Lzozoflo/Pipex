@@ -1,12 +1,14 @@
+.vscode
 a.out
+out
+
 txt
 *.txt
-.vscode
 
 object
-1object
 error
-1error
-maps
-pipex
+
 libft
+
+pipex
+*_bonus
