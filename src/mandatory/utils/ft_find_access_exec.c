@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:55:17 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/02 10:43:31 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:50:36 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,11 @@ char	*ft_exec(char *cmd_split, char **env)
 		if (access(exec, F_OK | X_OK) == 0)
 		{
 			execve(exec, cmd, env);
-			ft_freetab(tab, 0);
-			ft_freetab(cmd, 0);
-			free(exec);
+			ft_clear_all_exec(tab, cmd, exec, 0);
 			exit(1);
 		}
 		free(exec);
 	}
-	ft_printf("command not found: %s", cmd[0]);
-	return (ft_freetab(tab, 0), (void)ft_freetab(cmd, 0), NULL);
+	ft_clear_all_exec(tab, cmd, NULL, 1);
+	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:01:10 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/02 10:44:14 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/03 12:45:14 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 /*
  *------------ft_find_check_access.c
  */
-char	*ft_find_line_env(char *env_name, char **env);
 char	*ft_exec(char *cmd_split, char **env);
 
 /*
@@ -26,7 +25,8 @@ char	*ft_exec(char *cmd_split, char **env);
 void	ft_exit_fail_param(void);
 int		ft_open_file(char *file1, int file_status);
 void	ft_close(int fd, int exit);
-
+void	ft_cmd_perror(char *str);
+void	ft_clear_all_exec(char **tab, char **cmd, char *exec, int print);
 
 
 #endif

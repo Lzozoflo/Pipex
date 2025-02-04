@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 07:37:02 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/02 10:50:11 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:07:27 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 void	ft_exit_fail_param(void)
 {
-	ft_printf("+----------------------------+\n");
-	ft_printf("|  file cmd1 cmd2 cmdn file  |\n");
-	ft_printf("+----------------------------+\n");
+	ft_printf("+-----------------------+\n");
+	ft_printf("|  file cmd1 cmd2 file  |\n");
+	ft_printf("+-----------------------+\n");
 	exit(1);
 }
 
@@ -27,7 +27,7 @@ int	ft_open_file(char *file, int file_status)
 
 	fd = 0;
 	if (file_status == 0)
-		fd = open(file, O_RDONLY, 0777);
+		fd = open(file, O_RDONLY);
 	else if (file_status == 1)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd == -1)
@@ -42,5 +42,27 @@ void	ft_close(int fd, int exiting)
 {
 	close(fd);
 	if (exiting == 1)
+	{
+		ft_putstr_fd("fail fork", 2);
 		exit(1);
+	}
+}
+
+void	ft_cmd_perror(char *str)
+{
+	ft_putstr_fd("command not found: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd("\n", 2);
+}
+
+void	ft_clear_all_exec(char **tab, char **cmd, char *exec, int print)
+{
+	if (print == 1)
+		ft_cmd_perror(cmd[0]);
+	if (tab)
+		ft_freetab(tab, 0);
+	if (cmd)
+		ft_freetab(cmd, 0);
+	if (exec)
+		free(exec);
 }
