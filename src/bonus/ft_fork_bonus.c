@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fork.c                                          :+:      :+:    :+:   */
+/*   ft_fork_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 09:15:52 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/05 10:55:32 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/05 11:51:38 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "ft_pipex_bonus.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 void	ft_fork_file_failed(void)
 {
