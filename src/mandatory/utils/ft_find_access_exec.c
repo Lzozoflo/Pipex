@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:55:17 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/04 15:50:36 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/05 11:10:44 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,11 @@ int	ft_creat_utils_access(char *cmd_split, char **env, char ***tab, char ***cmd)
 	return (1);
 }
 
-char	*ft_exec(char *cmd_split, char **env)
+char	*ft_exec_path(char **cmd, char **tab, char **env)
 {
-	char	**cmd;
-	char	**tab;
 	char	*exec;
 	int		i;
 
-	if (!ft_creat_utils_access(cmd_split, env, &tab, &cmd))
-		return (NULL);
 	i = -1;
 	while (tab[++i])
 	{
@@ -81,5 +77,22 @@ char	*ft_exec(char *cmd_split, char **env)
 		free(exec);
 	}
 	ft_clear_all_exec(tab, cmd, NULL, 1);
+	exit(1);
+}
+
+char	*ft_exec(char *cmd_split, char **env)
+{
+	char	**cmd;
+	char	**tab;
+
+	if (!ft_creat_utils_access(cmd_split, env, &tab, &cmd))
+		return (NULL);
+	if (access(cmd[0], F_OK | X_OK) == 0)
+	{
+		execve(cmd[0], cmd, env);
+		ft_clear_all_exec(tab, cmd, NULL, 0);
+		exit(1);
+	}
+	ft_exec_path(cmd, tab, env);
 	exit(1);
 }

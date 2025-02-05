@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:01:10 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/04 14:54:48 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/05 11:15:42 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ char	*ft_exec(char *cmd_split, char **env);
  *------------ft_here_doc_bonus.c
  */
 void	ft_init_here_doc(char **av);
+
+/*
+ *------------ft_fork.c
+ */
+void	ft_fork_file_failed(void);
+void	ft_fork_last(char *cmd, char **env);
+void	ft_fork(char *cmd, char **env);
+
 /*
  *------------utils.c
  */
@@ -31,7 +39,5 @@ int		ft_open_file(char *file1, int file_status);
 void	ft_close(int fd, int exit);
 void	ft_cmd_perror(char *str);
 void	ft_clear_all_exec(char **tab, char **cmd, char *exec, int print);
-
-
 
 #endif

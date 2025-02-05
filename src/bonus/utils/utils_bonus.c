@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 07:37:02 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/04 08:48:53 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/04 15:55:32 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_close(int fd, int exiting)
 	close(fd);
 	if (exiting == 1)
 	{
-		ft_putstr_fd("fail fork");
+		ft_putstr_fd("fail fork", 2);
 		exit(1);
 	}
 }

@@ -3,7 +3,7 @@
 NAME			=	pipex
 B_NAME			=	pipex_bonus
 CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS			=	-Wall -Wextra -Werror -MMD -MP
 CFLAGSS			=	-Weverything -Wno-padded
 RM				=	rm -fr
 
@@ -36,7 +36,8 @@ D_UTILS		=		utils/
 
 INC				=		ft_pipex.h
 
-SRC				=		main.c
+SRC				=		main.c		\
+						ft_fork.c
 
 
 SRC_UTILS		=		utils.c					\
@@ -113,7 +114,8 @@ libft			:
 B_INC			=		ft_pipex_bonus.h
 
 B_SRC			=		main_bonus.c					\
-						ft_here_doc_bonus.c
+						ft_here_doc_bonus.c				\
+						ft_fork_bonus.c
 
 
 B_SRC_UTILS		=		utils_bonus.c					\
