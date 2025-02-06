@@ -42,8 +42,9 @@ SRC				=		main.c		\
 						ft_fork.c
 
 
-SRC_UTILS		=		utils.c					\
-						ft_find_access_exec.c
+SRC_UTILS		=		ft_find_access_exec.c	\
+						ft_open_file.c			\
+						utils.c
 
 
 #############################################################################################
@@ -120,8 +121,9 @@ B_SRC			=		main_bonus.c					\
 						ft_fork_bonus.c
 
 
-B_SRC_UTILS		=		utils_bonus.c					\
-						ft_find_access_exec_bonus.c
+B_SRC_UTILS		=		ft_find_access_exec_bonus.c		\
+						ft_open_file_bonus.c			\
+						utils_bonus.c
 
 #############################################################################################
 #																							#

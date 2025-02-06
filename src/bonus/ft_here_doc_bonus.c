@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 15:49:59 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/04 15:06:18 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:45:01 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-void	ft_open_here_doc(char **av, int p_fd)
+static int	ft_open_here_doc(char **av, int p_fd)
 {
 	char	*line;
 
@@ -24,15 +24,18 @@ void	ft_open_here_doc(char **av, int p_fd)
 	{
 		ft_printf("pipe heredoc> ");
 		line = get_next_line(0);
-		if (line && ft_strncmp(line, av[2], ft_strlen(av[2])) == 0)
+		if (!line)
+			return (-1);
+		if (ft_strncmp(line, av[2], ft_strlen(av[2])) == 0)
 		{
 			free(line);
-			ft_close(p_fd, 1);
+			ft_close(p_fd, 0);
 			break ;
 		}
 		ft_putstr_fd(line, p_fd);
 		free(line);
 	}
+	exit(0);
 }
 
 void	ft_init_here_doc(char **av)
@@ -46,7 +49,8 @@ void	ft_init_here_doc(char **av)
 	if (pid == -1)
 	{
 		ft_close(p_fd[0], 0);
-		ft_close(p_fd[1], 1);
+		ft_close(p_fd[1], 0);
+		exit (1);
 	}
 	else if (pid == CHILD)
 	{
@@ -56,7 +60,7 @@ void	ft_init_here_doc(char **av)
 	else
 	{
 		ft_close(p_fd[1], 0);
-		dup2(p_fd[0], STDIN_FILENO);
-		ft_close(p_fd[0], 0);
+		waitpid(pid, NULL, 0);
+		ft_dup(p_fd[0], STDIN_FILENO);
 	}
 }

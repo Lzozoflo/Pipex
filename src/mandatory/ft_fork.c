@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 09:15:52 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/05 11:39:54 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:35:56 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,28 @@ void	ft_fork_file_failed(void)
 	if (pipe(p_fd) == -1)
 		exit(1);
 	ft_close(p_fd[1], 0);
-	dup2(p_fd[0], STDIN_FILENO);
-	ft_close(p_fd[0], 0);
+	ft_dup(p_fd[0], STDIN_FILENO);
 }
 
-void	ft_fork_last(char *cmd, char **env)
+int	ft_fork_last(char *cmd, char **env)
 {
 	pid_t	pid;
+	int		status;
 
+	status = 0;
 	pid = fork();
 	if (pid == -1)
 		exit(1);
 	if (pid == CHILD)
 		ft_exec(cmd, env);
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
 static void	ft_child(char *cmd, char **env, int p_fd0, int p_fd1)
 {
 	ft_close(p_fd0, 0);
-	dup2(p_fd1, STDOUT_FILENO);
-	ft_close(p_fd1, 0);
+	ft_dup(p_fd1, STDOUT_FILENO);
 	ft_exec(cmd, env);
 }
 
@@ -63,7 +65,6 @@ void	ft_fork(char *cmd, char **env)
 	else
 	{
 		ft_close(p_fd[1], 0);
-		dup2(p_fd[0], STDIN_FILENO);
-		ft_close(p_fd[0], 0);
+		ft_dup(p_fd[0], STDIN_FILENO);
 	}
 }

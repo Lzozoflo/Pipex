@@ -6,16 +6,16 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:55:17 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/05 11:10:44 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/06 14:51:30 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 #include "libft.h"
 
-char	*ft_find_line_env(char *env_name, char **env)
+static char	*ft_find_line_env(char *env_name, char **env)
 {
-	int	len;
+	size_t	len;
 
 	len = ft_strlen(env_name);
 	while (env++)
@@ -26,7 +26,7 @@ char	*ft_find_line_env(char *env_name, char **env)
 	exit(0);
 }
 
-char	**ft_add_slash(char **tab)
+static char	**ft_add_slash(char **tab)
 {
 	void	*tmp;
 	int		i;
@@ -46,18 +46,21 @@ char	**ft_add_slash(char **tab)
 	return (tab);
 }
 
-int	ft_creat_utils_access(char *cmd_split, char **env, char ***tab, char ***cmd)
+static int	ft_path_cmd(char *cmd_split, char **env, char ***tab, char ***cmd)
 {
 	*tab = ft_add_slash(ft_split(ft_find_line_env("PATH", env), ':'));
 	if (!*tab)
-		return (0);
+		return (-1);
 	*cmd = ft_split(cmd_split, ' ');
-	if (!*cmd)
-		return ((void)ft_freetab(*tab, 0), 0);
-	return (1);
+	if (!*cmd)	if (!*cmd)
+	{
+		ft_freetab(*tab, 0);
+		return (-1);
+	}
+	return (0);
 }
 
-char	*ft_exec_path(char **cmd, char **tab, char **env)
+static char	*ft_exec_path(char **cmd, char **tab, char **env)
 {
 	char	*exec;
 	int		i;
@@ -67,7 +70,10 @@ char	*ft_exec_path(char **cmd, char **tab, char **env)
 	{
 		exec = ft_strjoin(tab[i], cmd[0]);
 		if (!exec)
-			return ((void)ft_freetab(tab, 0), (void)ft_freetab(cmd, 0), NULL);
+		{
+			ft_clear_all_exec(tab, cmd, NULL, 0);
+			exit(1);
+		}
 		if (access(exec, F_OK | X_OK) == 0)
 		{
 			execve(exec, cmd, env);
@@ -77,7 +83,7 @@ char	*ft_exec_path(char **cmd, char **tab, char **env)
 		free(exec);
 	}
 	ft_clear_all_exec(tab, cmd, NULL, 1);
-	exit(1);
+	exit(127);
 }
 
 char	*ft_exec(char *cmd_split, char **env)
@@ -85,14 +91,14 @@ char	*ft_exec(char *cmd_split, char **env)
 	char	**cmd;
 	char	**tab;
 
-	if (!ft_creat_utils_access(cmd_split, env, &tab, &cmd))
-		return (NULL);
+	if (ft_path_cmd(cmd_split, env, &tab, &cmd))
+		exit(1);
 	if (access(cmd[0], F_OK | X_OK) == 0)
 	{
 		execve(cmd[0], cmd, env);
-		ft_clear_all_exec(tab, cmd, NULL, 0);
-		exit(1);
+		ft_clear_all_exec(tab, cmd, NULL, 1);
+		exit(126);
 	}
 	ft_exec_path(cmd, tab, env);
-	exit(1);
+	exit(127);
 }
