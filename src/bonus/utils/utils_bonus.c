@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 07:37:02 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/06 14:44:09 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/08 09:36:22 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	ft_exit_fail_param(int error)
 {
 	if (error == 1)
 	{
-		ft_printf("+--------------------------------+\n");
-		ft_printf("|  file cmd1 cmd2 ... cmdn file  |\n");
-		ft_printf("+--------------------------------+\n");
+		ft_putstr_fd("+--------------------------------+\n", 2);
+		ft_putstr_fd("|  file cmd1 cmd2 ... cmdn file  |\n", 2);
+		ft_putstr_fd("+--------------------------------+\n", 2);
 	}
 	if (error == 2)
 	{
-		ft_printf("+--------------------------------------------+\n");
-		ft_printf("|  here_doc limiter cmd1 cmd2 ... cmdn file  |\n");
-		ft_printf("+--------------------------------------------+\n");
+		ft_putstr_fd("+--------------------------------------------+\n", 2);
+		ft_putstr_fd("|  here_doc limiter cmd1 cmd2 ... cmdn file  |\n", 2);
+		ft_putstr_fd("+--------------------------------------------+\n", 2);
 	}
 	exit(2);
 }

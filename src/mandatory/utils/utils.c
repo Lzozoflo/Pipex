@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 07:37:02 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/06 14:43:14 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/08 10:04:20 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,11 @@
 #include "libft.h"
 #include <fcntl.h>
 
-void	ft_exit_fail_param(int error)
+void	ft_exit_fail_param(void)
 {
-	if (error == 1)
-	{
-		ft_printf("+--------------------------------+\n");
-		ft_printf("|  file cmd1 cmd2 ... cmdn file  |\n");
-		ft_printf("+--------------------------------+\n");
-	}
-	if (error == 2)
-	{
-		ft_printf("+--------------------------------------------+\n");
-		ft_printf("|  here_doc limiter cmd1 cmd2 ... cmdn file  |\n");
-		ft_printf("+--------------------------------------------+\n");
-	}
-	exit(2);
+	ft_putstr_fd("+-----------------------+\n", 2);
+	ft_putstr_fd("|  file cmd1 cmd2 file  |\n", 2);
+	ft_putstr_fd("+-----------------------+\n", 2);
 }
 
 void	ft_dup(int oldfd, int newfd)

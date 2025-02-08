@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 09:10:24 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/06 14:37:50 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/08 14:01:23 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static char	*ft_bash_file_error(char *str1)
 		return (NULL);
 	}
 	rstr = ft_strjoin(tmp, ":");
+	free(tmp);
 	if (!rstr)
 	{
 		perror("Failure in error handling\n");
 		return (NULL);
 	}
-	free(tmp);
 	return (rstr);
 }
 
@@ -66,7 +66,7 @@ int	ft_file_out(char *file, char *cmd, char **env)
 	int		fd;
 
 	bash_error = NULL;
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		if (!file)

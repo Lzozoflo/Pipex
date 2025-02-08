@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:01:10 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/06 14:43:41 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/08 10:05:52 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_file_out(char *file, char *cmd, char **env);
 /*
  *------------utils.c
  */
-void	ft_exit_fail_param(int error);
+void	ft_exit_fail_param(void);
 void	ft_dup(int oldfd, int newfd);
 void	ft_close(int fd, int exit);
 void	ft_clear_all_exec(char **tab, char **cmd, char *exec, int print);

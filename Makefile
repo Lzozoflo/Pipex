@@ -3,8 +3,8 @@
 NAME			=	pipex
 B_NAME			=	pipex_bonus
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror -MMD -MP
-CFLAGSS			=	-Weverything -Wno-padded
+CFLAGSS			=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS			=	-Weverything -Wno-padded
 RM				=	rm -fr
 
 

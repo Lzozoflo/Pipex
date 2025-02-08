@@ -6,7 +6,7 @@
 /*   By: fcretin <fcretin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:55:17 by fcretin           #+#    #+#             */
-/*   Updated: 2025/02/06 14:51:38 by fcretin          ###   ########.fr       */
+/*   Updated: 2025/02/08 10:07:43 by fcretin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,6 @@ static char	**ft_add_slash(char **tab)
 	return (tab);
 }
 
-static int	ft_path_cmd(char *cmd_split, char **env, char ***tab, char ***cmd)
-{
-	*tab = ft_add_slash(ft_split(ft_find_line_env("PATH", env), ':'));
-	if (!*tab)
-		return (-1);
-	*cmd = ft_split(cmd_split, ' ');
-	if (!*cmd)
-	{
-		ft_freetab(*tab, 0);
-		return (-1);
-	}
-	return (0);
-}
-
 static char	*ft_exec_path(char **cmd, char **tab, char **env)
 {
 	char	*exec;
@@ -91,13 +77,20 @@ char	*ft_exec(char *cmd_split, char **env)
 	char	**cmd;
 	char	**tab;
 
-	if (ft_path_cmd(cmd_split, env, &tab, &cmd))
+	cmd = ft_split(cmd_split, ' ');
+	if (!cmd)
 		exit(1);
 	if (access(cmd[0], F_OK | X_OK) == 0)
 	{
 		execve(cmd[0], cmd, env);
-		ft_clear_all_exec(tab, cmd, NULL, 0);
+		ft_clear_all_exec(NULL, cmd, NULL, 0);
 		exit(126);
+	}
+	tab = ft_add_slash(ft_split(ft_find_line_env("PATH", env), ':'));
+	if (!tab)
+	{
+		ft_freetab(cmd, 0);
+		exit(1);
 	}
 	ft_exec_path(cmd, tab, env);
 	exit(127);
