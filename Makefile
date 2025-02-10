@@ -20,7 +20,6 @@ D_SRC			=		src/
 D_OBJ			=		object/
 D_INC			=		inc/
 
-D_OBJ_B			=		object_bonus/
 D_INC_B			=		inc_b/
 
 # Source Directories
@@ -137,8 +136,8 @@ B_SRCS			=		$(addprefix $(D_SRC)$(D_BONUS), $(B_SRC))					\
 						$(addprefix $(D_SRC)$(D_BONUS)$(D_UTILS), $(B_SRC_UTILS))
 
 # Changing all source directories to object directories
-B_OBJS			=		$(subst $(D_SRC), $(D_OBJ_B), $(B_SRCS:.c=.o))
-B_D_OBJS		=		$(subst $(D_SRC), $(D_OBJ_B), $(B_SRCS))
+B_OBJS			=		$(subst $(D_SRC), $(D_OBJ), $(B_SRCS:.c=.o))
+B_D_OBJS		=		$(subst $(D_SRC), $(D_OBJ), $(B_SRCS))
 B_DEPS			=		$(B_SRCS:%.c=%.d)
 
 
@@ -172,13 +171,11 @@ $(D_OBJ_B)%.o			:	$(D_SRC)%.c Makefile $(B_INCS)
 
 clean			:
 			$(RM) $(D_OBJ)
-			$(RM) $(D_OBJ_B)
 			$(MAKE) -C libft clean
 
 
 fclean			:
 			$(RM) $(D_OBJ)
-			$(RM) $(D_OBJ_B)
 			$(RM) $(NAME)
 			$(RM) $(B_NAME)
 			$(MAKE) -C libft fclean
